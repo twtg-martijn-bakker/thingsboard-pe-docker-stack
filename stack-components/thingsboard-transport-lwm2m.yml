@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  tb-lwm2m-transport:
+    image: ${DOCKER_REGISTRY_BASE_URL}/tb-pe-lwm2m-transport:${TB_VERSION}
+    restart: unless-stopped
+
+    ports:
+      - "5685:5685/udp"
+
+    environment:
+      TB_SERVICE_ID: tb-lwm2m-transport
+
+      LWM2M_BIND_ADDRESS: 0.0.0.0
+      LWM2M_BIND_PORT: 5685
+      LWM2M_TIMEOUT: 10000
+
+    env_file:
+      - ./stack-components/configs/redis.env
+      - ./stack-components/configs/zookeeper.env
+      - ./stack-components/configs/metrics.env
+      - ./stack-components/configs/webapp.env
+
+    volumes:
+      - ./config/tb-lwm2m-transport:/config
+      - ./logs/tb-lwm2m-transport:/var/log/tb-lwm2m-transport
+
+    depends_on:
+      - zookeeper

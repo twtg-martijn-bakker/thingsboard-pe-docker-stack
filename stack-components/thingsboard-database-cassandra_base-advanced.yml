@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  tb-core:
+    env_file:
+      - ./stack-components/configs/cassandra.env
+    depends_on:
+      - cassandra
+
+  tb-rule-engine:
+    env_file:
+      - ./stack-components/configs/cassandra.env
+    depends_on:
+      - cassandra

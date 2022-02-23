@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  tb-snmp-transport:
+    env_file:
+      - ./stack-components/configs/kafka.env
+    depends_on:
+      - kafka

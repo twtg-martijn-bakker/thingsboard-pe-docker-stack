@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  tb-snmp-transport:
+    image: ${DOCKER_REGISTRY_BASE_URL}/tb-pe-snmp-transport:${TB_VERSION}
+    restart: unless-stopped
+
+    environment:
+      TB_SERVICE_ID: tb-snmp-transport
+
+    env_file:
+      - ./stack-components/configs/redis.env
+      - ./stack-components/configs/zookeeper.env
+      - ./stack-components/configs/webapp.env
+      - ./stack-components/configs/metrics.env
+
+    volumes:
+      - ./config/tb-snmp-transport:/config
+      - ./logs/tb-snmp-transport:/var/log/tb-snmp-transport
+
+    depends_on:
+      - zookeeper

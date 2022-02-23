@@ -1,0 +1,6 @@
+version: '3.8'
+
+services:
+  tb-http-transport1:
+    env_file:
+      - ./stack-components/configs/rabbitmq.env

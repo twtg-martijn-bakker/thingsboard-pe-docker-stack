@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  cassandra:
+    restart: unless-stopped
+    image: cassandra:3.11.3
+
+    ports:
+      - "9042"
+
+    volumes:
+      - ./data/cassandra:/var/lib/cassandra

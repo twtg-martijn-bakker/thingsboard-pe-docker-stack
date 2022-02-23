@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  tb-http-transport:
+    image: ${DOCKER_REGISTRY_BASE_URL}/tb-pe-http-transport:${TB_VERSION}
+    restart: unless-stopped
+
+    ports:
+      - "8081"
+
+    environment:
+      TB_SERVICE_ID: tb-http-transport1
+
+      HTTP_BIND_ADDRESS: 0.0.0.0
+      HTTP_BIND_PORT: 8081
+      HTTP_REQUEST_TIMEOUT: 60000
+
+    env_file:
+      - ./stack-components/configs/redis.env
+      - ./stack-components/configs/zookeeper.env
+      - ./stack-components/configs/metrics.env
+
+    volumes:
+      - ./configs/tb-http-transport:/config
+      - ./logs/tb-http-transport:/var/log/tb-http-transport
+
+    depends_on:
+      - zookeeper
+
+  haproxy:
+    links:
+      - tb-http-transport

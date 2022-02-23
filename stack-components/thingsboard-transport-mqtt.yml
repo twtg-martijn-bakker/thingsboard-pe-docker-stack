@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  tb-mqtt-transport:
+    image: ${DOCKER_REGISTRY_BASE_URL}/tb-pe-mqtt-transport:${TB_VERSION}
+    restart: unless-stopped
+
+    ports:
+      - "1883"
+
+    environment:
+      TB_SERVICE_ID: tb-mqtt-transport1
+
+      MQTT_BIND_ADDRESS: 0.0.0.0
+      MQTT_BIND_PORT: 1883
+      MQTT_TIMEOUT: 10000
+
+    env_file:
+      - ./stack-components/configs/redis.env
+      - ./stack-components/configs/zookeeper.env
+      - ./stack-components/configs/metrics.env
+      - ./stack-components/configs/webapp.env
+
+    volumes:
+      - ./config/tb-mqtt-transport:/config
+      - ./logs/tb-mqtt-transport:/var/log/tb-mqtt-transport
+
+    depends_on:
+      - zookeeper
+
+
+  haproxy:
+    links:
+      - tb-mqtt-transport

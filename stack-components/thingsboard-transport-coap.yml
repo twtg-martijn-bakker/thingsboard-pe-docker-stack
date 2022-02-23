@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  tb-coap-transport:
+    image: ${DOCKER_REGISTRY_BASE_URL}/tb-pe-coap-transport:${TB_VERSION}
+    restart: unless-stopped
+
+    ports:
+      - "5683:5683/udp"
+
+    environment:
+      TB_SERVICE_ID: tb-coap-transport
+
+      COAP_BIND_ADDRESS: 0.0.0.0
+      COAP_BIND_PORT: 5683
+      COAP_TIMEOUT: 10000
+
+    env_file:
+      - ./stack-components/configs/redis.env
+      - ./stack-components/configs/zookeeper.env
+      - ./stack-components/configs/metrics.env
+      - ./stack-components/configs/webapp.env
+
+    volumes:
+      - ./config/tb-coap-transport:/config
+      - ./logs/tb-coap-transport:/var/log/tb-coap-transport
+
+    depends_on:
+      - zookeeper

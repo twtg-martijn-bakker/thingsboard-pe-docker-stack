@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  tb-lwm2m-transport:
+    env_file:
+      - ./stack-components/configs/kafka.env
+    depends_on:
+      - kafka

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  tb-js-executor:
+    env_file:
+      - ./stack-components/configs/kafka.env
+    depends_on:
+      - kafka
+
+  tb-core:
+    env_file:
+      - ./stack-components/configs/kafka.env
+    depends_on:
+      - kafka

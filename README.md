@@ -38,7 +38,8 @@ docker-compose up -d
   * [X] basic
   * [X] advanced
 * [X] "hybrid" (adds cassandra for time-series)
-* [ ] "monitoring" (adds prometheus and grafana)
+* [X] "monitoring" (adds prometheus and grafana)
+    [ ] add `/etc/grafana/provisioning/` somehow
 * [X] transports
   * [X] HTTP
   * [X] MQTT

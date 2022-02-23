@@ -32,3 +32,22 @@ services:
   tb-rule-engine:
     logging:
       <<: *logging-template
+
+
+  grafana:
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: foobar
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+    user: "472"
+    ports:
+      - 0.0.0.0:3000:3000
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+      # - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
+
+  prometheus:
+    ports:
+      - 9090:9090
+    volumes:
+      - ./config/prometheus:/etc/prometheus
+      - ./data/prometheus:/prometheus

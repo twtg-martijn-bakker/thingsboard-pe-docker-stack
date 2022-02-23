@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    restart: unless-stopped
+
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana:8.4.1
+    restart: unless-stopped
+
+    depends_on:
+      - prometheus
